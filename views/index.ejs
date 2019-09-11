@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>The Dojo Message Board</h1>
+        </header>
+        <div class="message_board">
+            <div class="message_input">
+                <form action="/post_message" method="POST">
+                    <label>Name:</label><br>
+                    <input type="text" name="name"><br>
+                    <label>Message:</label><br>
+                    <textarea name="message" id="message" cols="50" rows="5"></textarea><br>
+                    <input type="submit" name="post_messsage" value="Post message">
+                </form>
+            </div>
+            <div class="show_messages">
+            <% for(var i in all_messages) { %>
+                <h4>Name: <%= all_messages[i].name %></h4>
+                <h4>Message: <%= all_messages[i].message %></h4>
+                <div class="show_comments">
+                <% for(var j in all_messages[i].comments_posted) { %>
+                    <p>Name: <%= all_messages[i].comments_posted[j].name %></p>
+                    <p>Comment: <%= all_messages[i].comments_posted[j].comment %></p>
+                <% } %>    
+                    <form action="/post_comment" method="POST">
+                        <input type="hidden" name="id" value="<%= all_messages[i].id %>">
+                        <label>Name:</label><br>
+                        <input type="text" name="name"><br>
+                        <label>Comment:</label><br>
+                        <textarea name="comment" id="comment" cols="50" rows="5"></textarea><br>
+                        <input type="submit" name="post_comment" value="Post comment">
+                    </form>
+                </div>
+            <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
